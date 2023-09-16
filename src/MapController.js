@@ -17,12 +17,11 @@ class Map extends ISuscriber {
     lon = settings_map.initial_lon,
     zoom = settings_map.zoom
   ) {
-    this.map = L.map(settings_map.idMap, { center: [lat, lon], zoom: zoom });
+    this.map = L.map(settings_map.idMap, { maxZoom: settings_map.max_zoom}).setView([lat, lon], zoom);
   }
 
   setTileLayer(max_zoom = settings_map.zoom) {
     let tile_layer = L.tileLayer(settings_map.urlTemplate, {
-      maxZoom: max_zoom,
       attribution: settings_map.atribution,
     });
 
@@ -34,9 +33,18 @@ class Map extends ISuscriber {
       console.log(satelite)
       let contentPopup = "Satelite #" + satelite.numero_satelite +", "+ "Localizacion: [" + satelite.latitud + "," + satelite.longitud + "]" 
       let feature = L.marker([satelite.latitud, satelite.longitud]);
+      console.log(satelite.distancia/111.32)
+      let circle_feature = L.circle([satelite.latitud, satelite.longitud],{radius:(satelite.distancia)})
       feature.bindPopup(contentPopup)
       this.addFeature(feature)
+      this.addFeature(circle_feature)
     }
+  }
+
+  setControlScaleMap()
+  {
+    let control = L.control.scale()
+    this.features.push(control)
   }
 
   addFeature(feature) {
@@ -54,7 +62,11 @@ class Map extends ISuscriber {
     this.initMap();
     this.setTileLayer();
     this.setMarks();
+    this.setControlScaleMap()
+
+
     this.showMap();
+    
   }
 }
 

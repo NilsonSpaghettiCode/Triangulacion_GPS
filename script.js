@@ -21,7 +21,7 @@ async function getSatelites() {
 
     for (let i = 0; i< satelites_json.length; i++) {
         let data = satelites_json[i]
-        let satelite = new Satelite((i+1),data.distancia, data.lat, data.lon)
+        let satelite = new Satelite((i+1),data.distancia, data.lat, data.lon, data.px)
         satelites.push(satelite)
     }
     return satelites
