@@ -8,6 +8,7 @@ let settings_map =
     initial_lat: 39.07022405174613, 
     initial_lon: 35.73370268964278,
     radius_circle: 70000,
+    clickLatLen:true
 }
 
 export {settings_map}

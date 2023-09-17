@@ -1,25 +1,34 @@
+import { Coordenada } from "../util/geomath.js";
 class Satelite {
   /**
-   * 
+   *
    * @param {*} numero_satelite es un numero del 1 al 3
    * @param {*} distancia Debe estar en metros
-   * @param {*} latitud 
-   * @param {*} longitud 
-   * @param {*} px 
+   * @param {*} latitud
+   * @param {*} longitud
+   * @param {*} px
    */
-  constructor(numero_satelite, distancia, latitud, longitud, px) {
+  constructor(numero_satelite, distancia, latitud, longitud) {
     this._numero_satelite = numero_satelite;
     this._distancia = distancia;
     this._latitud = latitud;
     this._longitud = longitud;
-    this._px = px;
+    this._conexiones = [];
   }
-  set px(px)
-  {
-    this._px = px
+
+  valueOf() {
+    return this.numero_satelite;
   }
-  get px() {
-    return this._px;
+
+  getConexiones() {
+    return this._conexiones;
+  }
+  agregarConexion(conexion) {
+    this._conexiones.push(conexion);
+  }
+
+  get conexiones() {
+    return this._conexiones;
   }
 
   // Getter para el número de satélite
@@ -60,6 +69,14 @@ class Satelite {
   // Setter para la longitud
   set longitud(longitud) {
     this._longitud = longitud;
+  }
+
+  getLatLon() {
+    return new Coordenada(this._latitud, this._longitud);
+  }
+
+  getLatLonArray() {
+    return [this._latitud, this._longitud];
   }
 }
 

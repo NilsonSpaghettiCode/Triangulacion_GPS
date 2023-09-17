@@ -1,0 +1,25 @@
+Requisitos
+- Cada satelite debe tener Ciudad y Pais según la ubicación
+- 
+Resultado
+#1
+S1: Arabia Saudita, Riad
+S2: Uzbekistan, Samarcanda
+S3: Italia, Napoles
+
+#2
+ - Edificio relevante: 3 Mesquitas
+ - Localizacion(Lat,Lon):
+ - LatLng(33.324791, 44.077148)
+ - LatLng(33.190432, 44.001617)
+ - LatLng(33.193844, 44.004157)
+ - Pais: Irak
+#2
+
+14.368456432286543, 40.78689100382049
+
+
+- Idear metodo para trangulacion
+- Implementar funcion que por coordenada indique ciudad, lugar (MAP Box)
+- Implementar funcion que por coordenada indique lugares de interes (MAP Box)
+

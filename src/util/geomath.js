@@ -45,4 +45,21 @@ class geomath {
   }
 }
 
-export { geomath, R };
+class Coordenada
+{
+  constructor(lat, lon)
+  {
+    this._Lat = lat
+    this._Lon = lon
+  }
+  getLatitude()
+  {
+    return this._Lat;
+  }
+  getLongitude()
+  {
+    return this._Lon;
+  }
+}
+
+export { R, geomath, Coordenada };
