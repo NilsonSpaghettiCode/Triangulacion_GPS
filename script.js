@@ -30,7 +30,7 @@ async function Main(params) {
 async function getSatelites() {
   let satelites = [];
   let satelites_access = {};
-  let result = await loadData("./data/data.json");
+  let result = await loadData("./Data/data.json");
   let satelites_json = result.satelites;
 
   for (let i = 0; i < satelites_json.length; i++) {
