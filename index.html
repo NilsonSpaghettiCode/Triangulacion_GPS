@@ -1,17 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Triangulacion</title>
 </head>
+
 <body>
-    <div class="container">
-        <h1 class="">Triangulación</h1>
-        <div id="map" class="map">
+    <div class="container-fluid">
+        <div class="row">
+            <div id="map" class="col-6 map">
+            </div>
+
+            <div class="col">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-header">
+                        <b>Información de Triangulacion</b>
+                    </div>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Iteracion</b></li>
+                        <li class="list-group-item" id="iteraciones_actuales">0</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Objetivo localizado</b></li>
+                        <li class="list-group-item" id="state_localizacion">Undefined</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Localización</b></li>
+                        <li class="list-group-item" id="localizacion">Undefined</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Tiempo de busqueda</b></li>
+                        <li class="list-group-item" id="runtime">Infinite</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Pais</b></li>
+                        <li class="list-group-item" id="pais">Undefined</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Ciudad</b></li>
+                        <li class="list-group-item" id="ciudad">Undefined</li>
+                    </ul>
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item"><b>Lugar cercano</b></li>
+                        <li class="list-group-item" id="lugar_cercano">Undefined</li>
+                    </ul>
+                    <a href="#" class="btn btn-success" id="Start">Localizar</a>
+                </div>
+                <div class="border text-left">
+                    <table class="table table-striped table-hover" >
+                        <thead>
+                            <tr>
+                                <th scope="col">#Satelite</th>
+                                <th scope="col">País</th>
+                                <th scope="col">Ciudad</th>
+                                <th scope="col">Lugares de interes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table_data">
+                            <tr>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                                <td>@mdo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
+
+    </div>
     </div>
 </body>
+
 </html>
 <!--APIs externas-->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -21,13 +85,21 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
     integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>-->
 <!--Bootstrap-->
-    <!--CSS y Javascript-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <!--Proper-->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-
+<!--CSS y Javascript-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<!--Proper-->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+<!--Mapbox Search Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/2.9.2/mapbox-gl.js"></script>
 <!--Imports locales-->
 <script type="module" src="./script.js"></script>
 <link rel="stylesheet" href="style.css">

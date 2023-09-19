@@ -1,11 +1,13 @@
 import { IPublisher } from "./interfaces/IObserver.js";
 import { geomath, Coordenada } from "./util/geomath.js";
+
+import { Dom } from "./util/dom.js";
+
 class Triangulacion extends IPublisher {
   constructor(satelites) {
     super();
     this.satelites = satelites;
     this.located_target = [];
-
     //Heredados
     this.suscribers = [];
   }
@@ -19,6 +21,11 @@ class Triangulacion extends IPublisher {
       const suscriber = this.suscribers[index];
       suscriber.update(data, i);
     }
+  }
+
+  getLocatedTarget()
+  {
+    return this.located_target
   }
 
   aprox() {
@@ -52,7 +59,6 @@ class Triangulacion extends IPublisher {
     let distancia = S1.distancia;
 
     let target_state = false;
-    let posicion_aprox = undefined;
 
     //Coordenadas target
 
@@ -79,6 +85,7 @@ class Triangulacion extends IPublisher {
         }
         s_1 += aumento_grados;
         iteracion++;
+        Dom.setIteracion(iteracion)
       }
 
       if (init_state) {
@@ -90,22 +97,16 @@ class Triangulacion extends IPublisher {
           let status1 = this.puntos_cercanos(coordenada_target3, coordenada_target2, precision_distancia)
           let status2 = this.puntos_cercanos(coordenada_target3, coordenada_target, precision_distancia)
           if (status1 || status2) {
-            this.located_target = coordenada_target2
+            target_state = true
             this.notifySuscribers(coordenada_target3, iteracion);
             this.located_target.push(coordenada_target, coordenada_target2, coordenada_target3)
-            return true
+            Dom.setStateLocalizado(target_state)
+            Dom.setLocalizacion(this.located_target)
+            return target_state
           } 
-          /**
-           * else
-          {
-            console.log(geomath.haversine(coordenada_target3, coordenada_target2), iteracion)
-            console.log(status1, status2)
-            this.notifySuscribers(coordenada_target3, iteracion);
-          }
-           */
-
           s_3 += aumento_grados;
           iteracion++;
+          Dom.setIteracion(iteracion)
         }
         s_3 = 0
         
@@ -114,8 +115,9 @@ class Triangulacion extends IPublisher {
       s_1 = 0;
       s_2 += aumento_grados;
       iteracion++;
+      Dom.setIteracion(iteracion)
     }
-
+    
     console.log("Evaluacion terminada");
     console.log("Target localizado:", target_state);
     console.log("Posición target:", posicion_aprox);

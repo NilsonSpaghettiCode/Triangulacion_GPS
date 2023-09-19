@@ -3,8 +3,11 @@ import { loadData } from "./src/DataController.js";
 import { Satelite } from "./src/Model/Satelite.js";
 import { Conexiones } from "./src/Model/Conexiones.js";
 import { Triangulacion } from "./src/Triangulacion.js";
+import { getGeoData } from "./src/services/MapBoxService.js";
+import { Dom } from "./src/util/dom.js";
 
 async function Main(params) {
+  //Set DOM
   //Load Satelites
   let satelites = await getSatelites();
   //console.log(satelites)
@@ -18,8 +21,10 @@ async function Main(params) {
   //Aprox Localizacion
   let algoritm = new Triangulacion(satelites)
   algoritm.addSuscriber(mapa)
-  algoritm.aprox()
-  
+  //Set DOM
+  Dom.setStart(algoritm)
+  let data = await getDataTable(satelites)
+  Dom.loadDataTable(data)
 }
 
 async function getSatelites() {
@@ -54,5 +59,28 @@ async function getSatelites() {
 
   return satelites;
 }
+
+async function getDataTable(satelites)
+{
+  let data_table = []
+  for (let i = 0; i < satelites.length; i++) {
+    const satelite = satelites[i];
+    let coordenada_satelite = satelite.getLatLon()
+    let result = await getGeoData(coordenada_satelite.Lat,coordenada_satelite.Lon)
+    let data = result.features[0].properties.address
+    let tipo = result.features[0].properties.addresstype
+    let proximidad = data[tipo] === undefined ? tipo : data[tipo]
+    let row_table = {
+      satelite:(i+1),
+      pais:    data.country,
+      ciudad:  data.state,
+      proximidad: proximidad
+    }
+    data_table.push(row_table)
+  }
+
+  return data_table
+}
+
 
 Main();

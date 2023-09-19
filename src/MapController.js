@@ -14,6 +14,7 @@ class Map extends ISuscriber {
       const coordenada = data;
       let content = `${i.toString()}, [${coordenada.Lat}, ${coordenada.Lon}]`
       let feature = L.marker([coordenada.Lat, coordenada.Lon]);
+      this.map.setView([coordenada.Lat, coordenada.Lon], settings_map.max_zoom)
       feature.bindPopup(content)
       feature.addTo(this.map)
   }

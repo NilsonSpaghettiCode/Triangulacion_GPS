@@ -146,6 +146,11 @@ class Coordenada {
     return this._Lon;
   }
 
+  toString()
+  {
+    return `[${this._Lat} , ${this._Lon}]`
+  }
+
   isEqual(otroObjeto) {
     // Aquí puedes definir la lógica para comparar dos objetos de la clase.
     return this._Lat == otroObjeto.Lat && this._Lon == otroObjeto.Lon;
