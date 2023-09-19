@@ -6,7 +6,7 @@ class ISuscriber
 
     }
 
-    update(data)
+    update(data, i)
     {
         throw new Error("Abstract method, it has that be implement.")
     }

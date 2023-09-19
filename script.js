@@ -8,7 +8,9 @@ async function Main(params) {
   //Load Satelites
   let satelites = await getSatelites();
   //console.log(satelites)
-
+  //let x = new Coordenada(33.189858, 43.965912)
+  //let y = new Coordenada(33.192156, 43.967285)
+  //console.log(geomath.haversine(x, y))
   //Load Map
   let mapa = new Map(satelites);
   mapa.startMap();

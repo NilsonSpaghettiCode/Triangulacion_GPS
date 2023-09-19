@@ -6,14 +6,16 @@ class Map extends ISuscriber {
     this.map = {};
     this.features = [];
     this.satelites = satelites;
+
+    this.marks_tempo = []
   }
 
-  update(data) {
-    for (let i = 0; i < data.length; i++) {
-      const coordenada = data[i];
+  update(data, i) {
+      const coordenada = data;
+      let content = `${i.toString()}, [${coordenada.Lat}, ${coordenada.Lon}]`
       let feature = L.marker([coordenada.Lat, coordenada.Lon]);
+      feature.bindPopup(content)
       feature.addTo(this.map)
-    }
   }
 
   initMap(

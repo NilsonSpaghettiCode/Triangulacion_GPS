@@ -1,18 +1,17 @@
 /**
  * Const eart radius
  */
-const R = 6371;
+const R = 6371000;
 
 class geomath {
   constructor() {}
 
   static toRadians(value_degree) {
-    return (value_degree * (Math.PI / 180));
+    return value_degree * (Math.PI / 180);
   }
 
-  static toDegree(value_radian)
-  {
-    return ((value_radian/Math.PI)*180)
+  static toDegree(value_radian) {
+    return (value_radian / Math.PI) * 180;
   }
 
   /**
@@ -43,28 +42,27 @@ class geomath {
     let sqrt = Math.sqrt(intern_add);
     let arcsin = Math.asin(sqrt);
 
-    let r2 = 2*R;
+    let r2 = 2 * R;
 
     d = r2 * arcsin;
     return d;
   }
   /**
-   * 
-   * @param {*} coordenada_A 
-   * @param {*} coordenada_B 
+   *
+   * @param {*} coordenada_A
+   * @param {*} coordenada_B
    * @returns Retorna una coordenada C resultado de ser el punto medio entre A y B
    */
-  static puntoMedio(coordenada_A, coordenada_B)
-  {
+  static puntoMedio(coordenada_A, coordenada_B) {
     let Lat1 = coordenada_A.getLatitude();
     let Lon1 = coordenada_A.getLongitude();
 
     let Lat2 = coordenada_B.getLatitude();
     let Lon2 = coordenada_B.getLongitude();
 
-    let latmid = (Lat1+Lat2)/2
-    let lonmid = (Lon1+Lon2)/2
-    
+    let latmid = (Lat1 + Lat2) / 2;
+    let lonmid = (Lon1 + Lon2) / 2;
+
     /**
      *     
      * 
@@ -88,38 +86,69 @@ class geomath {
      * 
      */
     //return new Coordenada(this.toDegree(Lat3), this.toDegree(Lon3))
-    return new Coordenada(latmid, lonmid)
+    return new Coordenada(latmid, lonmid);
+  }
+  /**
+   * 
+   * @param {*} latitud 
+   * @param {*} longitud 
+   * @param {*} distancia 
+   * @param {*} angulo 
+   * @returns Retorna una cordenada alrededor de una latitud y longitud, usando distancia como Radio
+   */
+  static coordenada_alredor(latitud, longitud, distancia, angulo)
+  {
+    //Conversion y nombramiento de varibles
+    
+    let d = distancia; //Distancia en metros
+    let zeta = this.toRadians(angulo); //Angulo en radianes
+    let delta = d/R // δ - Delta
+    let lat1 = this.toRadians(latitud);
+    let lon1 = this.toRadians(longitud);
+
+    //Variables auxiliares
+
+    let sinlat = Math.sin(lat1)
+    let coslat = Math.cos(lat1)
+
+    let cos_delta = Math.cos(delta)
+    let sin_delta = Math.sin(delta)
+
+    let sin_zeta = Math.sin(zeta)
+    let cos_zeta = Math.cos(zeta)
+
+
+    //Calculo
+
+    let lat2 = Math.asin((sinlat*cos_delta)+(coslat*sin_delta*cos_zeta))
+    let lon2 = lon1 + Math.atan2(sin_zeta*sin_delta*coslat,(cos_delta-sinlat*Math.sin(lat2)))
+
+    return new Coordenada(this.toDegree(lat2), this.toDegree(lon2)) 
   }
 }
 
-class Coordenada
-{
-  constructor(lat, lon)
-  {
-    this._Lat = lat
-    this._Lon = lon
+class Coordenada {
+  constructor(lat, lon) {
+    this._Lat = lat;
+    this._Lon = lon;
   }
-  getLatitude()
-  {
+  getLatitude() {
     return this._Lat;
   }
-  getLongitude()
-  {
+  getLongitude() {
     return this._Lon;
   }
-  get Lat()
-  {
-    return this._Lat
+  get Lat() {
+    return this._Lat;
   }
 
-  get Lon()
-  {
-    return this._Lon
+  get Lon() {
+    return this._Lon;
   }
 
   isEqual(otroObjeto) {
     // Aquí puedes definir la lógica para comparar dos objetos de la clase.
-    return (this._Lat == otroObjeto.Lat && this._Lon == otroObjeto.Lon);
+    return this._Lat == otroObjeto.Lat && this._Lon == otroObjeto.Lon;
   }
 }
 
