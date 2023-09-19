@@ -2,16 +2,22 @@ import { Map } from "./src/MapController.js";
 import { loadData } from "./src/DataController.js";
 import { Satelite } from "./src/Model/Satelite.js";
 import { Conexiones } from "./src/Model/Conexiones.js";
+import { Triangulacion } from "./src/Triangulacion.js";
 
 async function Main(params) {
   //Load Satelites
   let satelites = await getSatelites();
-  console.log(satelites);
-  //Aprox Localizacion
+  //console.log(satelites)
 
   //Load Map
   let mapa = new Map(satelites);
   mapa.startMap();
+
+  //Aprox Localizacion
+  let algoritm = new Triangulacion(satelites)
+  algoritm.addSuscriber(mapa)
+  algoritm.aprox()
+  
 }
 
 async function getSatelites() {

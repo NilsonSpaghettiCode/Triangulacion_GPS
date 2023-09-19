@@ -8,7 +8,13 @@ class Map extends ISuscriber {
     this.satelites = satelites;
   }
 
-  update(data) {}
+  update(data) {
+    for (let i = 0; i < data.length; i++) {
+      const coordenada = data[i];
+      let feature = L.marker([coordenada.Lat, coordenada.Lon]);
+      feature.addTo(this.map)
+    }
+  }
 
   initMap(
     lat = settings_map.initial_lat,

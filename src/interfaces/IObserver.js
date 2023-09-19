@@ -25,7 +25,7 @@ class IPublisher
         throw new Error("Abstract method, it has that be implement.")
     }
 
-    notifySuscribers(data)
+    notifySuscribers()
     {
         throw new Error("Abstract method, it has that be implement.")
     }
